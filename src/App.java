@@ -3,6 +3,15 @@ import java.net.SocketException;
 import java.util.Scanner;
 import org.apache.commons.net.ftp.FTPClient;
 
+/*TODO: 
+ * 1 - Realizar Download e Upload de um arquivo do servidor FTP (2/2) - OK
+ * 2 - Possível Criar, renomear e remover diretórios do servidor FTP (3/3) - OK
+ * 3 - Possível Criar, renomear e remover arquivos do servidor FTP (3/3) - OK
+ * 4 - Listar os arquivos contidos no servidor FTP (1/1)
+ * 5 - Listar os diretorios contidos no servidor FTP (1/1)
+ * Regras - No máximo 5 pastas no servidor FTP, no máximo 3 niveis de subpastas e cada subpasta pode ter no máximo 2 arquivos.
+ */
+
 public class App {
     public static void main(String[] args) throws SocketException, IOException {
         Scanner entry = new Scanner(System.in);
@@ -26,7 +35,8 @@ public class App {
                 System.out.println("6 - Criar um arquivo");
                 System.out.println("7 - Renomear um arquivo");
                 System.out.println("8 - Deletar um arquivo");
-
+                System.out.println("9 - Listar os arquivos");
+                System.out.println("10 - Listar os diretórios");
                 option = entry.nextInt();
 
                 switch(option){
@@ -85,8 +95,16 @@ public class App {
                     name_file = entry.next();
                     controller.deletFile(ftp, name_file);
                     break;
+                case 9:
+                    // Listar os arquivos
+                        controller.listFiles(ftp);
+                    break;
+                case 10:
+                    // Listar os diretórios
+                        controller.listDirectory(ftp);
+                    break;
                 default:
-                    System.out.println("As opções são entre 1 e 8, digite 0 para sair");  
+                    System.out.println("As opções são entre 1 e 10, digite 0 para sair");  
                 }
             }  
             System.out.println("Você saiu");
@@ -98,11 +116,3 @@ public class App {
         }
     }
 }
-/*TODO: 
- * 1 - Realizar Download e Upload de um arquivo do servidor FTP (2/2) - OK
- * 2 - Possível Criar, renomear e remover diretórios do servidor FTP (3/3) - OK
- * 3 - Possível Criar, renomear e remover arquivos do servidor FTP (3/3) - OK
- * 4 - Listar os arquivos contidos no servidor FTP (0/1)
- * 5 - Listar os diretorios contidos no servidor FTP (0/1)
- * Regras - No máximo 5 pastas no servidor FTP, no máximo 3 niveis de subpastas e cada subpasta pode ter no máximo 2 arquivos.
- */

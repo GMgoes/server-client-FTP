@@ -1,9 +1,15 @@
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.Random;
+
+import javax.swing.filechooser.FileFilter;
+
 import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPFile;
+import org.apache.commons.net.ftp.FTPFileFilter;
 
 public class Controller {
     
@@ -105,6 +111,43 @@ public class Controller {
             System.out.println("Arquivo deletado");
         }
     }  
+
+    public void listDirectory(FTPClient ftp){
+        // Listar os diretórios
+        try{
+            FTPFileFilter filter = new FTPFileFilter() {
+                @Override
+                public boolean accept(FTPFile ftpFile) {
+                    return ftpFile.isDirectory();
+                }
+            };
+            System.out.println("Lista de diretórios");
+            FTPFile [] directory =  ftp.listFiles(null, filter);
+            for(FTPFile d: directory){
+                System.out.println(d.getName());
+            }
+        } catch(Exception e){
+            System.out.println("Não foi possível listar os diretórios");
+        }
+    }
     
+    public void listFiles(FTPClient ftp){
+        // Listar os arquivos
+        try{           
+            FTPFileFilter filter = new FTPFileFilter() {
+                @Override
+                public boolean accept(FTPFile ftpFile) {
+                    return ftpFile.isFile();
+                }
+            };
+            System.out.println("Lista de arquivos");
+            FTPFile [] file =  ftp.listFiles(null, filter);
+            for(FTPFile f: file){
+                System.out.println(f.getName());
+            }
+        } catch(Exception e){
+            System.out.println("Não foi possível listar os arquivos");
+        }
+    }
         
 }
